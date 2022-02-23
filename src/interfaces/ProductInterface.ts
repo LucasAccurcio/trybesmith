@@ -1,9 +1,12 @@
 export interface BaseProduct {
   name: string;
   amount: string;
-  orderId: number;
 }
 
 export interface Product extends BaseProduct {
   id: number;
+}
+
+export interface ProductWithOrder extends BaseProduct {
+  orderId: number;
 }
