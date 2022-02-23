@@ -17,7 +17,7 @@ async function validateJWT(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ message: 'Token not found' });
+    return res.status(401).json({ error: 'Token not found' });
   }
 
   try {
@@ -26,15 +26,15 @@ async function validateJWT(req: Request, res: Response, next: NextFunction) {
 
     if (!user) {
       return res.status(401)
-        .json({ message: 'Invalid login or password' });
+        .json({ error: 'Invalid login or password' });
     }
 
     req.user = user;
 
     next();
   } catch (err) {
-    // console.error(err.message);
-    return res.status(401).json({ message: 'Expired or invalid token' });
+    // console.error(err.error);e
+    return res.status(401).json({ error: 'Invalid token' });
   }
 }
 

@@ -40,10 +40,15 @@ function validationProduct(req: Request, res: Response, next: NextFunction) {
 
   const [valid, property] = validateProperties(product);
 
+  let prop = property;
+  if (typeof prop === 'string') {
+    prop = prop.charAt(0).toLocaleUpperCase() + prop.substring(1);
+  }
+
   if (!valid) {
     return res
       .status(StatusCode.BAD_REQUEST)
-      .json({ message: `${property} is required` });
+      .json({ error: `${prop} is required` });
   }
 
   const [isValid, error] = validateValues(product);

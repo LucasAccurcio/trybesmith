@@ -25,11 +25,15 @@ export async function findAll(): Promise<User[]> {
 }
 
 export async function login(name: string): Promise<LoginUser> {
-  const [result] = await connection
-    .execute(
-      'SELECT username, password FROM Users WHERE username = ?',
-      [name],
-    );
-  const [user] = result as LoginUser[];
-  return user;
+  try {
+    const [result] = await connection
+      .execute(
+        'SELECT username, password FROM Users WHERE username = ?',
+        [name],
+      );
+    const [user] = result as LoginUser[];
+    return user;
+  } catch (e) {
+    throw Error('Erro de conexão');
+  }
 }
