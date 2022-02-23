@@ -20,7 +20,7 @@ export async function create(newUser: BaseUser) {
 
 export async function findAll(): Promise<User[]> {
   const [result] = await connection
-    .execute('SELECT * FROM Users');
+    .execute('SELECT * FROM Trybesmith.Users');
   return result as User[];
 }
 
@@ -28,7 +28,7 @@ export async function login(name: string): Promise<LoginUser> {
   try {
     const [result] = await connection
       .execute(
-        'SELECT username, password FROM Users WHERE username = ?',
+        'SELECT username, password FROM Trybesmith.Users WHERE username = ?',
         [name],
       );
     const [user] = result as LoginUser[];

@@ -6,7 +6,7 @@ import connection from './connection';
 export async function create(userId: number) {
   const [result] = await connection
     .execute<ResultSetHeader>(
-    'INSERT INTO Orders (userId) VALUES (?)',
+    'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
     [userId],
   );
   const { insertId: id } = result;
@@ -18,6 +18,6 @@ export async function create(userId: number) {
 
 export async function findAll(): Promise<Order[]> {
   const [result] = await connection
-    .execute('SELECT * FROM Orders');
+    .execute('SELECT * FROM Trybesmith.Orders');
   return result as Order[];
 }
