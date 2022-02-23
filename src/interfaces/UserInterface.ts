@@ -1,7 +1,7 @@
 export interface BaseUser {
   username: string;
   classe: string;
-  level: string;
+  level: number;
   password: string;
 }
 
