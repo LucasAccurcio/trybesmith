@@ -5,6 +5,8 @@ import loginValidations from './controllers/middlewares/loginValidations';
 
 import * as user from './controllers/userController';
 import * as product from './controllers/productController';
+import * as order from './controllers/orderController';
+import validateJWT from './auth/validateJWT';
 
 require('express-async-errors');
 
@@ -13,11 +15,11 @@ const app = express();
 app.use(express.json());
 
 app.post('/users', validationUser, user.create);
-app.get('/users', user.findAll);
+app.get('/users', validateJWT, user.findAll);
 app.post('/login', loginValidations, user.login);  
-app.post('/products', validationProduct, product.create);
-app.get('/products', product.findAll);
-app.get('/orders');
+app.post('/products', validateJWT, validationProduct, product.create);
+app.get('/products', validateJWT, product.findAll);
+app.get('/orders', validateJWT, order.findAll);
 app.post('/orders');
 app.post('/orders/:id');
 

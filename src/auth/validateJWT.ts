@@ -1,22 +1,29 @@
-/* // require('dotenv').config();
+import { Request, Response, NextFunction } from 'express';
 
-const jwt = require('jsonwebtoken');
-const { Users } = require('../../models');
+import { verify } from 'jsonwebtoken';
+import { LoginUser } from '../interfaces/LoginInterface';
+import * as userModel from '../models/userModel';
 
-const segredo = process.env.JWT_SECRET;
+// https://stackoverflow.com/questions/37377731/extend-express-request-object-using-typescript
+declare module 'express-serve-static-core' {
+  interface Request {
+    user: LoginUser;
+  }
+}
 
-module.exports = async (req, res, next) => {
+const secret = 'meusegredo';
+
+async function validateJWT(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
 
   if (!token) {
     return res.status(401).json({ message: 'Token not found' });
   }
 
-  const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-
   try {
-    const decoded = jwt.verify(token, segredo, jwtConfig);
-    const user = await Users.findOne({ where: { displayName: decoded.displayName } });
+    const decoded = verify(token, secret) as LoginUser;
+    const user = await userModel.login(decoded.username);
+
     if (!user) {
       return res.status(401)
         .json({ message: 'Invalid login or password' });
@@ -26,7 +33,9 @@ module.exports = async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
-}; */
+}
+
+export default validateJWT;

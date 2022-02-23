@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { sign } from 'jsonwebtoken';
 import * as userService from '../services/userService';
 import { BaseUser } from '../interfaces/UserInterface';
 import { LoginUser } from '../interfaces/LoginInterface';
@@ -23,5 +24,10 @@ export async function login(req: Request, res: Response) {
   if (users.username === 'error') {
     return res.status(401).json({ error: 'Username or password invalid' });
   }
-  res.status(201).json(users);
+
+  const userData = users;
+  const secret = 'meusegredo';
+  const token = sign(userData, secret);
+
+  res.status(201).json({ token });
 }
