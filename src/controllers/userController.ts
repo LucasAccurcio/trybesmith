@@ -8,9 +8,13 @@ import { LoginUser } from '../interfaces/LoginInterface';
 export async function create(req: Request, res: Response) {
   const item: BaseUser = req.body;
 
-  const newItem = await userService.create(item);
+  await userService.create(item);
+  const { username, password } = req.body;
+  const userData = { username, password };
+  const secret = 'meusegredo';
+  const token = sign(userData, secret);
 
-  res.status(201).json(newItem);
+  res.status(201).json({ token });
 }
 
 export async function findAll(req: Request, res: Response) {
@@ -29,5 +33,5 @@ export async function login(req: Request, res: Response) {
   const secret = 'meusegredo';
   const token = sign(userData, secret);
 
-  res.status(201).json({ token });
+  res.status(200).json({ token });
 }

@@ -33,7 +33,7 @@ function validateLevel(level: number) {
 
 function validatePassword(password: string) {
   if (typeof password !== 'string') return [false, 'Password must be a string'];
-  if (password.length < 7) return [false, 'Password must be longer than 7 characters'];
+  if (password.length <= 7) return [false, 'Password must be longer than 7 characters'];
   return [true, null];
 }
 
@@ -57,11 +57,14 @@ function validationUser(req: Request, res: Response, next: NextFunction) {
   const user: BaseUser = req.body;
 
   const [valid, property] = validateProperties(user);
-
+  let prop = property;
+  if (typeof prop === 'string') {
+    prop = prop.charAt(0).toLocaleUpperCase() + prop.substring(1);
+  }
   if (!valid) {
     return res
       .status(StatusCode.BAD_REQUEST)
-      .json({ message: `${property} is required` });
+      .json({ error: `${prop} is required` });
   }
 
   const [isValid, error] = validateValues(user);
