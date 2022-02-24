@@ -1,5 +1,5 @@
 import { ResultSetHeader } from 'mysql2';
-import { BaseProduct, Product } from '../interfaces/ProductInterface';
+import { BaseProduct, Product, ProductId } from '../interfaces/ProductInterface';
 
 import connection from './connection';
 
@@ -30,4 +30,11 @@ export async function update(orderId: number, id: number) {
       [orderId, id],
     );
   return true;
+}
+
+export async function findByOrderId(id: string): Promise<ProductId[]> {
+  const [result] = await connection
+    .execute('SELECT id FROM Trybesmith.Products WHERE orderId = ?', [id]);
+
+  return result as ProductId[];
 }

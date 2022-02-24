@@ -16,6 +16,13 @@ export async function create(userId: number) {
   return insertedProduct;
 }
 
+export async function findById(id: string): Promise<Order[]> {
+  const [result] = await connection
+    .execute('SELECT * FROM Trybesmith.Orders WHERE id = ?', [id]);
+
+  return result as Order[];
+}
+
 export async function findAll(): Promise<Order[]> {
   const [result] = await connection
     .execute('SELECT * FROM Trybesmith.Orders');

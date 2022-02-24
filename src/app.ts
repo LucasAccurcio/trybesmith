@@ -22,12 +22,12 @@ app.post('/products', validateJWT, validationProduct, product.create);
 app.get('/products', validateJWT, product.findAll);
 app.get('/orders', validateJWT, order.findAll);
 app.post('/orders', validateJWT, validateOrderProduct, order.create);
-app.post('/orders/:id');
+app.get('/orders/:id', validateJWT, order.findById);
 
 app.use((err:object, _req: Request, res: Response, _next: NextFunction) => {
   console.log(Error, err);
   res.status(500);
-  res.json({ error: 'Deu errado!' }); 
+  res.json({ error: 'Algo saiu errado!' }); 
 });
 
 export default app;
