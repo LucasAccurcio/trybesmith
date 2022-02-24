@@ -1,5 +1,5 @@
 import { ResultSetHeader } from 'mysql2';
-import { LoginUser } from '../interfaces/LoginInterface';
+import { Login } from '../interfaces/LoginInterface';
 import { BaseUser, User } from '../interfaces/UserInterface';
 
 import connection from './connection';
@@ -24,14 +24,14 @@ export async function findAll(): Promise<User[]> {
   return result as User[];
 }
 
-export async function login(name: string): Promise<LoginUser> {
+export async function login(name: string): Promise<Login> {
   try {
     const [result] = await connection
       .execute(
-        'SELECT username, password FROM Trybesmith.Users WHERE username = ?',
+        'SELECT id, username, password FROM Trybesmith.Users WHERE username = ?',
         [name],
       );
-    const [user] = result as LoginUser[];
+    const [user] = result as Login[];
     return user;
   } catch (e) {
     throw Error('Erro de conexão');

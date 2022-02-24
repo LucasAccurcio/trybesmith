@@ -22,3 +22,12 @@ export async function findAll(): Promise<Product[]> {
     .execute('SELECT * FROM Trybesmith.Products');
   return result as Product[];
 }
+
+export async function update(orderId: number, id: number) {
+  await connection
+    .execute(
+      'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?',
+      [orderId, id],
+    );
+  return true;
+}
