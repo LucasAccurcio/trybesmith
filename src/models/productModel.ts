@@ -1,5 +1,5 @@
 import { ResultSetHeader } from 'mysql2';
-import { BaseProduct, Product, ProductId } from '../interfaces/ProductInterface';
+import { BaseProduct, Product, ProductId, ProductWithOrder } from '../interfaces/ProductInterface';
 
 import connection from './connection';
 
@@ -17,10 +17,11 @@ export async function create(newProduct: BaseProduct) {
   return insertedProduct;
 }
 
-export async function findAll(): Promise<Product[]> {
+export async function findAll(): Promise<ProductWithOrder[]> {
   const [result] = await connection
     .execute('SELECT * FROM Trybesmith.Products');
-  return result as Product[];
+
+  return result as ProductWithOrder[];
 }
 
 export async function update(orderId: number, id: number) {
@@ -29,6 +30,7 @@ export async function update(orderId: number, id: number) {
       'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?',
       [orderId, id],
     );
+
   return true;
 }
 

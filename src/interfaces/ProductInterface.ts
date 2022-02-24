@@ -7,7 +7,7 @@ export interface Product extends BaseProduct {
   id: number;
 }
 
-export interface ProductWithOrder extends BaseProduct {
+export interface ProductWithOrder extends Product {
   orderId: number;
 }
 

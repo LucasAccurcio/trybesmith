@@ -9,10 +9,9 @@ export async function create(req: Request, res: Response) {
 
   const { products } = req.body;
 
-  const promise = products.map(async (product: number) => {
+  await Promise.all(products.map(async (product: number) => {
     await productModel.update(newItem.id, product);
-  });
-  Promise.allSettled(promise);
+  }));
 
   res.status(201).json({ 
     order: 
@@ -31,5 +30,7 @@ export async function findById(req: Request, res: Response) {
 
 export async function findAll(req: Request, res: Response) {
   const order = await orderService.findAll();
-  res.status(201).json(order);
+  
+  if (!order) return res.status(404).json({ error: 'Order not found' });
+  res.status(200).json(order);
 }

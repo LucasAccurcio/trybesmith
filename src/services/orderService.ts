@@ -22,8 +22,18 @@ export async function findById(id: string): Promise<OrderProducts | boolean> {
   return obj as OrderProducts;
 }
 
-export async function findAll(): Promise<Order[]> {
+export async function findAll(): Promise<Order[] | boolean> {
   const orders = await orderModel.findAll();
+  if (!orders[0]) return false;
+  const products = await productModel.findAll();
 
-  return orders;
+  const allOrders = orders.map((order) => ({
+    id: order.id,
+    userId: order.userId,
+    products: products
+      .filter((product) => order.id === product.orderId)
+      .map((item) => item.id),
+  }));
+
+  return allOrders;
 }
