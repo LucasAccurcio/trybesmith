@@ -54,44 +54,58 @@ Neste projeto, consegui desenvolver as seguintes habilidades:
 
 6. Utilize a extensão no VSCode "Thunder Client" ou instale o Postman em sua máquina.
 
-Acesse um endpoint para verificar seu funcionamento:
+   Acesse um endpoint para verificar seu funcionamento:
 
-Cria um usuário - Método POST http://localhost:3000/users
+   Cria um usuário - Método POST http://localhost:3000/users
 
-body:
-  {
-    "username": "No do seu usuário",
-    "classe": "ferreiro",
-    "level": 1,
-    "password": "password_do_seu_usuario"
-  }
+   body:
+   
+   `{
+     "username": "No do seu usuário",
+     "classe": "ferreiro",
+     "level": 1,
+     "password": "password_do_seu_usuario"
+   }`
 
-Será gerado um token que deve ser utilizado para conseguir acessar as próximas rotas.
-O token deve ser copiado e colado na guia "Headers" no campo a ser criado "Authorization".
-Pronto, você já terá acesso as seguintes rotas:
-get('/users');
-post('/login');  
-post('/products');
-get('/products');
-get('/orders');
-post('/orders');
-get('/orders/:id');
+   Será gerado um token que deve ser utilizado para conseguir acessar as próximas rotas.
 
-Vamos criar um produto e depois consultá-lo?
-acesse a rota: POST http://localhost:3000/products
-Copie o token no campo Authorization
-Na guia body copie o seguinte texto:
-  {
-    "name": "Espada longa",
-    "amount": "30 peças de ouro"
-  }
+   O token deve ser copiado e colado na guia "Headers" no campo a ser criado "Authorization".
 
-Crie mais outro item:
-  {
-    "name": "Martelo",
-    "amount": "10 peças de ouro"
-  }
+   Pronto, você já terá acesso as seguintes rotas:
 
-Mude para rota GET http://localhost:3000/products
+   `get('/users');`
+   
+   `post('/login');`
 
-Conseguimos consultar todos os produtos criados.
+   `post('/products');`
+
+   `get('/products');`
+
+   `get('/orders');`
+
+   `post('/orders');`
+
+   `get('/orders/:id');`
+
+   Vamos criar um produto e depois consultá-lo?
+
+   acesse a rota: POST http://localhost:3000/products
+
+   Copie o token no campo Authorization
+
+   Na guia body copie o seguinte texto:
+
+     `{
+       "name": "Espada longa",
+       "amount": "30 peças de ouro"
+     }`
+
+   Crie mais outro item:
+     `{
+       "name": "Martelo",
+       "amount": "10 peças de ouro"
+     }`
+
+   Mude para rota GET http://localhost:3000/products
+
+   Conseguimos consultar todos os produtos criados.
